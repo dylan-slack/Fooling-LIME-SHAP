@@ -1,6 +1,6 @@
 {
 	"model_version": "experiment_params",
-	"seed": 123,
+	"seed": 123454321,
 	"protected_class": 1,
 	"unprotected_class": 0, 
 	"positive_outcome": 1,
