@@ -57,10 +57,6 @@ class Adversarial_Model(object):
 		pred_probs = self.perturbation_identifier.predict_proba(X)
 		perturbation_preds = (pred_probs[:,1] >= threshold)
 
-		# print (perturbation_preds)
-		# Return the psi_display values of the instances that appear out of distribution
-
-		# print (predictions_to_obscure)
 		sol = np.where(np.array([perturbation_preds == 1,perturbation_preds==1]).transpose(), predictions_to_obscure, predictions_to_explain_by)
 		return sol
 
