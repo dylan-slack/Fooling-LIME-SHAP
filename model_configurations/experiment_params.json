@@ -1,0 +1,9 @@
+{
+	"model_version": "experiment_params",
+	"seed": 123,
+	"protected_class": 1,
+	"unprotected_class": 0, 
+	"positive_outcome": 1,
+	"negative_outcome": 0,
+	"perturbation_std": 0.3
+}
