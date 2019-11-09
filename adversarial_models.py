@@ -91,7 +91,7 @@ class Adversarial_Model(object):
 		A scalar value of the accuracy score on the task.
 		"""
 
-		return np.sum(self.predict(X_test)==y_test) / y_test.sizeX
+		return np.sum(self.predict(X_test)==y_test) / y_test.size
 
 	def get_column_names(self):
 		""" Access column names."""
