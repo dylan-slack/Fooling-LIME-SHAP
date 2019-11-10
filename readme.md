@@ -55,7 +55,6 @@ Please consider citing our paper if you found this work useful!
 	journal={arXiv},
 	year={2019},
 }
-
 ```
 
 ## Contact
