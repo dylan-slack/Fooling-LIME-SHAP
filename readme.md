@@ -64,5 +64,5 @@ This code was developed by Dylan Slack, Sophie Hilgard, and Emily Jia.  Reach ou
 Our emails are: [dslack@uci.edu](mailto:dslack@uci.edu), [ash798@g.harvard.edu](mailto:ash798@g.harvard.edu), and [ejia@college.harvard.edu](mailto:ejia@college.harvard.edu).
 
 <p align="center">
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fdylan-slack%2FFooling-LIME-SHAP)
+<img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fdylan-slack%2FFooling-LIME-SHAP" alt="Hits">
 </p>
