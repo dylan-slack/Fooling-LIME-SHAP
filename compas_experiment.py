@@ -38,9 +38,6 @@ X['unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
 X['unrelated_column_two'] = np.random.choice([0,1],size=X.shape[0])
 features = [c for c in X]
 
-categorical_feature_name = ['two_year_recid', 'c_charge_degree_F', 'c_charge_degree_M', 'sex_Female', 'sex_Male', 'race', 'unrelated_column_one', 'unrelated_column_two']
-categorical_feature_indcs = [features.index(c) for c in categorical_feature_name]
-
 race_indc = features.index('race')
 unrelated_indcs = features.index('unrelated_column_one')
 unrelated_indcs1 = features.index('unrelated_column_two')
@@ -87,7 +84,7 @@ def experiment_main():
 	* We print out the rate at which features occur in the top three features
 	"""
 
-	xtrain,xtest,ytrain,ytest = train_test_split(X,y)
+	xtrain,xtest,ytrain,ytest = train_test_split(X,y,test_size=0.1)
 	xtest_not_normalized = deepcopy(xtest)
 	ss = StandardScaler().fit(xtrain)
 	xtrain = ss.transform(xtrain)
@@ -95,7 +92,7 @@ def experiment_main():
 
 	print ('---------------------')
 	print ("Beginning LIME COMPAS Experiments....")
-	print ("(These take a some time to run because we have to generate explanations for every point in the test set) ")
+	print ("(These take some time to run because we have to generate explanations for every point in the test set) ")
 	print ('---------------------')
 
 	# Train the adversarial model for LIME with f and psi 
