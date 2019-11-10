@@ -35,7 +35,7 @@ Model agnostic post-hoc explanation techniques tend to _perturb around_ the inst
 Because the perturbation distribution is different than the true distribution, we can create a classifier that learns this differences.  Using this classifier, we can classify perturbations differently than the in distribution data. This allows us to introduce _another classifer_ to classify out of distribution data. This looks like:
 
 <p align="center">
-	<img src="images/three.jpg" width="25%">
+	<img src="images/three.jpg" width="30%">
 </p>
 
 Where red and yellow is the out of distribution model. The explanation method (LIME/SHAP) explains this model on the out of distribution instances it generates and the true classifier on the in distribution data.  In practice, LIME and SHAP generate _many_ out of distribution instances, so the out of distribution model is explained strongly.  In this example, the x axis would look less important because the out of distribution model doesn't rely on this axis.  
