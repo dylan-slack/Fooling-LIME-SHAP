@@ -22,8 +22,7 @@ We provide a short walk through on COMPAS in `COMPAS_Example.ipynb`.  This is a 
 
 How does this method work? Consider some data distributed along a line in the (x,y) plane like such and the instance to explain in red. 
 
-![one](images/one.jpg | width=100)
-
+<img src="images/one.jpg" width="25%">
 
 
 
