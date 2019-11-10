@@ -62,7 +62,3 @@ Please consider citing our paper if you found this work useful!
 This code was developed by Dylan Slack, Sophie Hilgard, and Emily Jia.  Reach out to us with any questions!
 
 Our emails are: [dslack@uci.edu](mailto:dslack@uci.edu), [ash798@g.harvard.edu](mailto:ash798@g.harvard.edu), and [ejia@college.harvard.edu](mailto:ejia@college.harvard.edu).
-
-<p align="center">
-<img src="https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fdylan-slack%2FFooling-LIME-SHAP" alt="Hits">
-</p>
