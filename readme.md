@@ -22,7 +22,7 @@ We provide a short walk through on COMPAS in `COMPAS_Example.ipynb`.  This is a 
 
 How does this method work? Consider some data distributed along a line in the (x,y) plane like such and the instance to explain in red. 
 
-![one](images/one.jpg)
+![one](images/one.jpg | width=100)
 
 
 
@@ -46,4 +46,4 @@ Please consider citing our paper if you found this work useful!
 
 This code was developed by Dylan Slack, Sophie Hilgard, and Emily Jia.  Reach out to us with any questions!
 
-Our emails are: [mailto](mailto:dslack@uci.edu), [mailto](mailto:ash798@g.harvard.edu), and [mailto](mailto:ejia@college.harvard.edu).
+Our emails are: [mailto:dslack@uci.edu](mailto:dslack@uci.edu), [ash798@g.harvard.edu](mailto:ash798@g.harvard.edu), and [ejia@college.harvard.edu](mailto:ejia@college.harvard.edu).
