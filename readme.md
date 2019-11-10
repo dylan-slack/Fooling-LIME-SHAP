@@ -34,13 +34,13 @@ Model agnostic post-hoc explanation techniques tend to _perturb around_ the inst
 	<img src="images/two.jpg" width="25%">
 </p>
 
-Because the perturbation distribution is different than the true distribution, we can create a classifier that learns this differences.  Using this classifier, we can classify perturbations differently than the in distribution data. This allows us to introduce _another classifer_ to classify out of distribution data. This looks like:
+Because the perturbation distribution is different than the true distribution, we can create a classifier that learns this difference.  Using this classifier, we can classify perturbations differently than the in distribution data. This allows us to introduce _another classifer_ to classify out of distribution data. This looks like:
 
 <p align="center">
 	<img src="images/three.jpg" width="30%">
 </p>
 
-Where red and yellow is the out of distribution model. The explanation method (LIME/SHAP) explains this model on the out of distribution instances it generates and the true classifier on the in distribution data.  In practice, LIME and SHAP generate _many_ out of distribution instances, so the out of distribution model is explained strongly.  In this example, the x axis would look less important because the out of distribution model doesn't rely on this axis.  
+Where red and yellow is the out of distribution model. We use a scaffolded classifier to detect if an instance is in distribution or out of distribution. The explanation method (LIME/SHAP) explains the out of distribution model on the out of distribution instances it generates and the true classifier on the in distribution data.  In practice, LIME and SHAP generate _many_ out of distribution instances, so the out of distribution model is explained strongly.  In this example, the x axis would look less important because the out of distribution model doesn't rely on this axis.  
 
 Effectively, this let's us retain (potentially biased or harmful) in distribution decisions while post hoc explanation methods like LIME and SHAP explain other features as the most imporant.  Check out our [paper](https://arxiv.org/abs/1911.02508) for more details!
 
