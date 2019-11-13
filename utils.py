@@ -61,8 +61,10 @@ def rank_features(explanation):
     ----------
     List contained ranked feature names
     """
-    ordered_tuples = sorted(explanation, key=lambda x : abs(x[1]), reverse=True)   
-    return [tup[0] for tup in ordered_tuples]
+
+    ordered_tuples = sorted(explanation, key=lambda x : abs(x[1]), reverse=True)  
+    results = [tup[0] if tup[1] != 0 else ("Nothing shown",0) for tup in ordered_tuples]
+    return results
 
 def get_rank_map(ranks, to_consider):
     """ Give a list of feature names in their ranked positions, return a map from position ranks
@@ -107,12 +109,8 @@ def experiment_summary(explanations, features):
     for exp in explanations:
         ranks = rank_features(exp)
         for i in range(3):
-            for f in features:
+            for f in features + ["Nothing shown"]:
                 if f in ranks[i]:
                     top_features[i].append(f)
 
     return get_rank_map(top_features, len(explanations))
-
-
-
-

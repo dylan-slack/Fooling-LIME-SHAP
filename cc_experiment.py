@@ -1,12 +1,7 @@
 """
-The experiment MAIN for COMPAS.
- * Run the file and the COMPAS experiments will complete
- * This may take some time because we iterate through every instance in the test set for
-   both LIME and SHAP explanations take some time to compute
- * The print outs can be interpreted as maps from the RANK to the rate at which the feature occurs in the rank.. e.g:
- 	    1: [('length_of_stay', 0.002592352559948153), ('unrelated_column_one', 0.9974076474400518)]
-   can be read as the first unrelated column occurs ~100% of the time in as the most important feature
- * "Nothing shown" refers to SHAP yielding only 0 shapley values 
+The experiment MAIN for Communities and Crime.
+ * Run the file and the CC experiments will complete
+ * See compas experiment file for more details on how to read results.
 """
 import warnings
 warnings.filterwarnings('ignore') 
@@ -30,21 +25,21 @@ from copy import deepcopy
 # Set up experiment parameters
 params = Params("model_configurations/experiment_params.json")
 np.random.seed(params.seed)
-X, y, cols = get_and_preprocess_compas_data(params)
+X, y, cols = get_and_preprocess_cc(params)
 
 # add unrelated columns, setup
 X['unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
 X['unrelated_column_two'] = np.random.choice([0,1],size=X.shape[0])
 features = [c for c in X]
 
-race_indc = features.index('race')
+race_indc = features.index('racePctWhite numeric')
 unrelated_indcs = features.index('unrelated_column_one')
 unrelated_indcs1 = features.index('unrelated_column_two')
 
 X = X.values
 
 ###
-## The models f and psi for COMPAS.  We discriminate based on race for f and concider two RANDOMLY DRAWN features to display in psi
+## The models f and psi for CC.  We discriminate based on race for f and concider two RANDOMLY DRAWN features to display in psi
 #
 
 # the biased model 
@@ -68,8 +63,9 @@ class innocuous_model_psi:
 # the display model with two unrelated features
 class innocuous_model_psi_two:
 	def predict_proba(self, X):
-		A = np.where(X[:,unrelated_indcs] > 0, params.positive_outcome, params.negative_outcome)
-		B = np.where(X[:,unrelated_indcs1] > 0, params.positive_outcome, params.negative_outcome)
+		# Using 0.5 to make it easier to detect decision boundary on perturbation
+		A = np.where(X[:,unrelated_indcs] > .5, params.positive_outcome, params.negative_outcome)
+		B = np.where(X[:,unrelated_indcs1] < -.5, params.positive_outcome, params.negative_outcome)
 		preds = np.logical_xor(A, B).astype(int)
 		return one_hot_encode(preds)
 #
@@ -78,7 +74,7 @@ class innocuous_model_psi_two:
 
 def experiment_main():
 	"""
-	Run through experiments for LIME/SHAP on compas using both one and two unrelated features.
+	Run through experiments for LIME/SHAP on CC using both one and two unrelated features.
 	* This may take some time given that we iterate through every point in the test set
 	* We print out the rate at which features occur in the top three features
 	"""
@@ -89,7 +85,7 @@ def experiment_main():
 	xtest = ss.transform(xtest)
 
 	print ('---------------------')
-	print ("Beginning LIME COMPAS Experiments....")
+	print ("Beginning LIME CC Experiments....")
 	print ("(These take some time to run because we have to generate explanations for every point in the test set) ")
 	print ('---------------------')
 
@@ -112,14 +108,13 @@ def experiment_main():
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):
-		explanations.append(adv_explainer.explain_instance(xtest[i], adv_lime.predict_proba).as_list())
+		explanations.append(adv_explainer.explain_instance(xtest[i], adv_lime.predict_proba).as_list())	
 
 	print ("LIME Ranks and Pct Occurances two unrelated features:")
 	print (experiment_summary(explanations, features))
 	print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
-
 	print ('---------------------')
-	print ('Beginning SHAP COMPAS Experiments....')
+	print ('Beginning SHAP CC Experiments....')
 	print ('---------------------')
 
 	#Setup SHAP
