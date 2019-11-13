@@ -47,6 +47,7 @@ class Adversarial_Model(object):
 		predictions_to_obscure = self.f_obscure.predict_proba(X)
 
 		# generate the "explain" predictions -- this is psi in the paper
+
 		predictions_to_explain_by = self.psi_display.predict_proba(X)
 
 		# in the case that we're only considering numerical columns
@@ -56,8 +57,8 @@ class Adversarial_Model(object):
 		# allow thresholding for finetuned control over psi_display and f_obscure
 		pred_probs = self.perturbation_identifier.predict_proba(X)
 		perturbation_preds = (pred_probs[:,1] >= threshold)
-
 		sol = np.where(np.array([perturbation_preds == 1,perturbation_preds==1]).transpose(), predictions_to_obscure, predictions_to_explain_by)
+
 		return sol
 
 	def predict(self, X):

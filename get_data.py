@@ -111,4 +111,4 @@ def get_and_preprocess_german(params):
 
 	y = np.array([POSITIVE_OUTCOME if p == 1 else NEGATIVE_OUTCOME for p in y.values])
 
-	return X, y, np.array([c for c in X]) 
+	return X, y, [c for c in X] 
