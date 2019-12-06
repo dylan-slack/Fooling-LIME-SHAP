@@ -1,8 +1,10 @@
 # Adversarial Attacks on Post Hoc Explanations
 
-This is the code for our paper, "How can we fool LIME and SHAP? Adversarial Attacks on Post hoc Explanation Methods."
+This is the code for our paper, "Nothing to See Here: Hiding Model Biases by Fooling Post hoc Explanation Methods."
 
 Read the [paper](https://arxiv.org/abs/1911.02508).
+
+Note, that we had previously called this work: "How can we fool LIME and SHAP? Adversarial Attacks on Post hoc Explanation Methods."
 
 ## Getting started
 
@@ -48,10 +50,10 @@ Please consider citing our paper if you found this work useful!
 
 ```
 @article{SlackHilgard2019FoolingLIMESHAP,
-	title={How can we fool LIME and SHAP? Adversarial Attacks on Post hoc Explanation Methods},
+	title={Nothing to See Here: Hiding Model Biases by Fooling Post hoc Explanation Methods},
 	author={Dylan Slack and Sophie Hilgard and Emily Jia and Sameer Singh and Himabindu Lakkaraju},
-	journal={arXiv},
-	year={2019},
+	journal={AAAI/ACM Conference on Artificial Intelligence, Ethics, and Society (AIES)},
+	year={2020},
 }
 ```
 
