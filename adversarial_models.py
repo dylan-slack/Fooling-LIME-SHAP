@@ -194,7 +194,11 @@ class Adversarial_Kernel_SHAP_Model(Adversarial_Model):
 	def __init__(self, f_obscure, psi_display):
 		super(Adversarial_Kernel_SHAP_Model, self).__init__(f_obscure, psi_display)
 
+<<<<<<< HEAD
 	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10, estimator=None):
+=======
+	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10):
+>>>>>>> 8135bfa9ef4061e1b8b70978d216a4e144bbe49a
 		""" Trains the adversarial SHAP model. This method perturbs the shap training distribution by sampling from 
 		its kmeans and randomly adding features.  These points get substituted into a test set.  We also check to make 
 		sure that the instance isn't in the test set before adding it to the out of distribution set.
