@@ -5,6 +5,7 @@ import sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
+from sklearn.model_selection import train_test_split
 
 from copy import deepcopy
 
@@ -127,7 +128,7 @@ class Adversarial_Lime_Model(Adversarial_Model):
 		super(Adversarial_Lime_Model, self).__init__(f_obscure, psi_display)
 		self.perturbation_std = perturbation_std
 
-	def train(self, X, y, feature_names, perturbation_multiplier=30, categorical_features=[], rf_estimators=100):
+	def train(self, X, y, feature_names, perturbation_multiplier=30, categorical_features=[], rf_estimators=100, estimator=None):
 		""" Trains the adversarial LIME model.  This method trains the perturbation detection classifier because
 		it assumes that you already have provided a classifier to obscure and another classifier to display.
 		
@@ -169,7 +170,16 @@ class Adversarial_Lime_Model(Adversarial_Model):
 
 		# generate perturbation detection model as RF
 		xtrain = all_x[:,self.numerical_cols]
-		self.perturbation_identifier = RandomForestClassifier(n_estimators=rf_estimators).fit(xtrain, all_y)
+
+		xtrain, xtest, ytrain, ytest = train_test_split(xtrain, all_y, test_size=0.2)
+
+		if estimator is not None:
+			self.perturbation_identifier = estimator.fit(xtrain, ytrain)
+		else:
+			self.perturbation_identifier = RandomForestClassifier(n_estimators=rf_estimators).fit(xtrain, ytrain)
+
+		ypred = self.perturbation_identifier.predict(xtest)
+		self.ood_training_task_ability = (ytest, ypred)
 
 		return self
 
@@ -184,7 +194,7 @@ class Adversarial_Kernel_SHAP_Model(Adversarial_Model):
 	def __init__(self, f_obscure, psi_display):
 		super(Adversarial_Kernel_SHAP_Model, self).__init__(f_obscure, psi_display)
 
-	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10):
+	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10, estimator=None):
 		""" Trains the adversarial SHAP model. This method perturbs the shap training distribution by sampling from 
 		its kmeans and randomly adding features.  These points get substituted into a test set.  We also check to make 
 		sure that the instance isn't in the test set before adding it to the out of distribution set.
@@ -239,6 +249,15 @@ class Adversarial_Kernel_SHAP_Model(Adversarial_Model):
 						 for val in range(substituted_training_data.shape[0])])
 
 		all_instances_y = np.concatenate((np.ones(repeated_X.shape[0]),ys))
-		self.perturbation_identifier = RandomForestClassifier(n_estimators=rf_estimators).fit(all_instances_x,all_instances_y)
-		
+
+		xtrain,xtest,ytrain,ytest = train_test_split(all_instances_x, all_instances_y, test_size=0.2)
+
+		if estimator is not None:
+			self.perturbation_identifier = estimator.fit(xtrain,ytrain)
+		else:
+			self.perturbation_identifier = RandomForestClassifier(n_estimators=rf_estimators).fit(xtrain,ytrain)
+
+		ypred = self.perturbation_identifier.predict(xtest)
+		self.ood_training_task_ability = (ytest, ypred)
+
 		return self
