@@ -26,7 +26,7 @@ for trial in np.unique(df['trial']):
 	pct_second = relevant_runs['pct_occur_second'].values[0]
 	pct_third = relevant_runs['pct_occur_third'].values[0]
 
-	f1 = roc_auc_score(y, yhat)
+	f1 = f1_score(y, yhat)
 
 	f1s.append(f1)
 	fsts.append(pct_first)
@@ -40,9 +40,8 @@ ax = plt.axes()
 plt.ylim(-.05,1.05)
 plt.xlim(0,1)
 
-plt.xlabel("AUC score on OOD task")
+plt.xlabel("F1 score on OOD task")
 plt.ylabel("% explanations with race as first feature")
 
-sns.regplot(f1s, fsts, logistic=True, ax=ax)
-
-plt.savefig("shap_auc_first.png")
+sns.scatterplot(f1s, fsts, ax=ax)
+plt.savefig("shap_f1_first.png")
