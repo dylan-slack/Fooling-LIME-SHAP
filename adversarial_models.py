@@ -129,8 +129,8 @@ class Adversarial_Lime_Model(Adversarial_Model):
 		self.perturbation_std = perturbation_std
 
 	def train(self, X, y, feature_names, perturbation_multiplier=30, categorical_features=[], rf_estimators=100, estimator=None):
-		""" Trains the adversarial LIME model.  This method trains the perturbation detection classifier because
-		it assumes that you already have provided a classifier to obscure and another classifier to display.
+		""" Trains the adversarial LIME model.  This method trains the perturbation detection classifier to detect instances
+		that are either in the manifold or not if no estimator is provided.
 		
 		Parameters:
 		----------
@@ -140,6 +140,7 @@ class Adversarial_Lime_Model(Adversarial_Model):
 		cols : list
 		categorical_columns : list
 		rf_estimators : integer
+		estimaor : func
 		"""
 		if isinstance(X, pd.DataFrame):
 			cols = [c for c in X]
@@ -194,14 +195,11 @@ class Adversarial_Kernel_SHAP_Model(Adversarial_Model):
 	def __init__(self, f_obscure, psi_display):
 		super(Adversarial_Kernel_SHAP_Model, self).__init__(f_obscure, psi_display)
 
-<<<<<<< HEAD
 	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10, estimator=None):
-=======
-	def train(self, X, y, feature_names, perturbation_multiplier=10, n_samples=2e4, rf_estimators=100, n_kmeans=10):
->>>>>>> 8135bfa9ef4061e1b8b70978d216a4e144bbe49a
 		""" Trains the adversarial SHAP model. This method perturbs the shap training distribution by sampling from 
 		its kmeans and randomly adding features.  These points get substituted into a test set.  We also check to make 
-		sure that the instance isn't in the test set before adding it to the out of distribution set.
+		sure that the instance isn't in the test set before adding it to the out of distribution set. If an estimator is 
+		provided this is used.
 
 		Parameters:
 		----------
@@ -212,6 +210,7 @@ class Adversarial_Kernel_SHAP_Model(Adversarial_Model):
 		n_samples : int or float
 		rf_estimators : int
 		n_kmeans : int
+		estimator : func
 
 		Returns:
 		----------
