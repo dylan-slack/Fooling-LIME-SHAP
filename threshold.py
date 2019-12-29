@@ -1,4 +1,6 @@
-
+"""
+Train a bunch of models to create metric vs perturbation task score graphs.
+"""
 from adversarial_models import *
 from utils import *
 from get_data import *
@@ -11,8 +13,6 @@ import lime
 import lime.lime_tabular
 import shap
 from copy import deepcopy
-
-# Thresholding exps
 
 # Flip LIME flag to vary between lime shap
 LIME = False

@@ -1,3 +1,6 @@
+"""
+* Methods to create graphs for f1 accuracy on perturbation task graphs.
+"""
 import pandas as pd
 import numpy as np
 
@@ -6,10 +9,7 @@ from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-# some hacky analysis from yours truly
-
 df = pd.read_csv('data/threshold_results_shap.csv', index_col=0)
-
 f1s, fsts, scnds, thrds = [], [], [], []
 
 for trial in np.unique(df['trial']):
@@ -18,7 +18,7 @@ for trial in np.unique(df['trial']):
 	yhat = relevant_runs['yhat']
 	y = relevant_runs['y']
 
-	# need to flip classes
+	# need to flip classes (we interpret 0 as ood in code but refer to it as 1 in paper)
 	yhat = 1 - yhat
 	y = 1 - y
 
@@ -32,9 +32,6 @@ for trial in np.unique(df['trial']):
 	fsts.append(pct_first)
 	scnds.append(pct_second)
 	thrds.append(pct_third)
-
-# plt.scatter(f1s, fsts)
-# plt.show()
 
 ax = plt.axes()
 plt.ylim(-.05,1.05)
