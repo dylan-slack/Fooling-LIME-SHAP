@@ -4,8 +4,6 @@ This is the code for our paper, "Fooling LIME and SHAP: Adversarial Attacks on P
 
 Read the [paper](https://arxiv.org/abs/1911.02508).
 
-Note, that we had previously called this work: "How can we fool LIME and SHAP? Adversarial Attacks on Post hoc Explanation Methods."
-
 ## Getting started
 
 Setup virtual environment and install requirements:
