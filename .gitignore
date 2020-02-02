@@ -4,6 +4,9 @@ _pycache__/
 *.py[cod]
 *$py.class
 
+fool-images/
+images/
+
 data/threshold_results_lime.csv
 data/threshold_results_shap.csv
 # C extensions
