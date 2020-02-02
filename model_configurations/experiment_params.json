@@ -6,5 +6,5 @@
 	"positive_outcome": 1,
 	"negative_outcome": 0,
 	"perturbation_std": 0.3,
-	"samples": 6000
+	"samples": 3000
 }

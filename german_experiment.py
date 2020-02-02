@@ -28,7 +28,7 @@ np.random.seed(1234321)
 features = [c for c in X]
 
 gender_indc = features.index('Gender')
-unrelated_indcs = features.index('LoanRateAsPercentOfIncome')
+loan_rate_indc = features.index('LoanRateAsPercentOfIncome')
 
 X = X.values
 
@@ -37,17 +37,17 @@ ss = StandardScaler().fit(xtrain)
 xtrain = ss.transform(xtrain)
 xtest = ss.transform(xtest)
 
-median_lrpi = np.median(xtrain[:,unrelated_indcs])
+median_lrpi = np.median(xtrain[:,loan_rate_indc])
 
 ###
-## The models f and psi for GERMAN.  We discriminate based on gender for f and concider two RANDOMLY DRAWN features to display in psi
+## The models f and psi for GERMAN.  We discriminate based on gender for f and consider loan rate % income for explanation
 #
 
 # the biased model 
 class racist_model_f:
-    # Decision rule: classify negatively if gender is black
+    # Decision rule: classify negative outcome if female
     def predict(self,X):
-        return np.array([params.negative_outcome if x[gender_indc] > 0 else params.positive_outcome for x in X])
+        return np.array([params.negative_outcome if x[gender_indc] <= 0 else params.positive_outcome for x in X])
 
     def predict_proba(self, X): 
         return one_hot_encode(self.predict(X))
@@ -57,9 +57,9 @@ class racist_model_f:
     
 # the display model with one unrelated feature
 class innocuous_model_psi:
-    # Decision rule: classify according to randomly drawn column 'unrelated column'
+    # Decision rule: classify according to loan rate indc
     def predict_proba(self, X): 
-        return one_hot_encode(np.array([params.negative_outcome if x[unrelated_indcs] > median_lrpi else params.positive_outcome for x in X]))
+        return one_hot_encode(np.array([params.negative_outcome if x[loan_rate_indc] > median_lrpi else params.positive_outcome for x in X]))
 
 ##
 ###
