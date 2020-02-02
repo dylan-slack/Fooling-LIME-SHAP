@@ -18,7 +18,7 @@ You should be able to run the code now!
 
 We provide a short walk through on COMPAS in `COMPAS_Example.ipynb`.  This is a nice place to get started to see how our method works.  The full experiments from the paper can be found in `compas_experiment.py` and `cc_experiment.py`. 
 
-## Intuition
+<!-- ## Intuition
 
 How does this method work? Consider some data distributed along a line in the (x,y) plane like such and the instance to explain in red. 
 
@@ -40,7 +40,7 @@ Because the perturbation distribution is different than the true distribution, w
 
 Where red and yellow is the out of distribution model. We use a scaffolded classifier to detect if an instance is in distribution or out of distribution. The explanation method (LIME/SHAP) explains the out of distribution model on the out of distribution instances it generates and the true classifier on the in distribution data.  In practice, LIME and SHAP generate _many_ out of distribution instances, so the out of distribution model is explained strongly.  In this example, the x axis would look less important because the out of distribution model doesn't rely on this axis.  
 
-Effectively, this let's us retain (potentially biased or harmful) in distribution decisions while post hoc explanation methods like LIME and SHAP explain other features as the most imporant.  Check out our [paper](https://arxiv.org/abs/1911.02508) for more details!
+Effectively, this let's us retain (potentially biased or harmful) in distribution decisions while post hoc explanation methods like LIME and SHAP explain other features as the most imporant.  Check out our [paper](https://arxiv.org/abs/1911.02508) for more details! -->
 
 ## References
 
