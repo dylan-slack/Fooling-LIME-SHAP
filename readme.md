@@ -4,6 +4,8 @@ This is the code for our paper, "Fooling LIME and SHAP: Adversarial Attacks on P
 
 Read the [paper](https://arxiv.org/abs/1911.02508).
 
+Note, that we had previously called this work: "How can we fool LIME and SHAP? Adversarial Attacks on Post hoc Explanation Methods."
+
 ## Getting started
 
 Setup virtual environment and install requirements:
@@ -47,11 +49,19 @@ Effectively, this let's us retain (potentially biased or harmful) in distributio
 Please consider citing our paper if you found this work useful!
 
 ```
+<<<<<<< HEAD
 @inproceedings{advlime:aies20,
   author = {Dylan Slack and Sophie Hilgard and Emily Jia and Sameer Singh and Himabindu Lakkaraju},
   title = {Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods},
   booktitle = {AAAI/ACM Conference on AI, Ethics, and Society (AIES)},
   year = {2020}
+=======
+@article{SlackHilgard2019FoolingLIMESHAP,
+	title={Nothing to See Here: Hiding Model Biases by Fooling Post hoc Explanation Methods},
+	author={Dylan Slack and Sophie Hilgard and Emily Jia and Sameer Singh and Himabindu Lakkaraju},
+	journal={AAAI/ACM Conference on Artificial Intelligence, Ethics, and Society (AIES)},
+	year={2020},
+>>>>>>> d5c79d85d0a2323c2fdbc13db8a7ab5c3d40f8bc
 }
 ```
 
