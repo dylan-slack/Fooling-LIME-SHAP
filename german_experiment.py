@@ -18,12 +18,13 @@ import lime
 import lime.lime_tabular
 import shap
 
+from sklearn.cluster import KMeans 
+
 from copy import deepcopy
 
 # Set up experiment parameters
 params = Params("model_configurations/experiment_params.json")
 X, y, cols = get_and_preprocess_german(params)
-np.random.seed(1234321)
 
 features = [c for c in X]
 
@@ -37,7 +38,7 @@ ss = StandardScaler().fit(xtrain)
 xtrain = ss.transform(xtrain)
 xtest = ss.transform(xtest)
 
-median_lrpi = np.median(xtrain[:,loan_rate_indc])
+mean_lrpi = np.mean(xtrain[:,loan_rate_indc])
 
 ###
 ## The models f and psi for GERMAN.  We discriminate based on gender for f and consider loan rate % income for explanation
@@ -47,7 +48,7 @@ median_lrpi = np.median(xtrain[:,loan_rate_indc])
 class racist_model_f:
     # Decision rule: classify negative outcome if female
     def predict(self,X):
-        return np.array([params.negative_outcome if x[gender_indc] <= 0 else params.positive_outcome for x in X])
+        return np.array([params.negative_outcome if x[gender_indc] < 0 else params.positive_outcome for x in X])
 
     def predict_proba(self, X): 
         return one_hot_encode(self.predict(X))
@@ -59,7 +60,7 @@ class racist_model_f:
 class innocuous_model_psi:
     # Decision rule: classify according to loan rate indc
     def predict_proba(self, X): 
-        return one_hot_encode(np.array([params.negative_outcome if x[loan_rate_indc] > median_lrpi else params.positive_outcome for x in X]))
+        return one_hot_encode(np.array([params.negative_outcome if x[loan_rate_indc] > mean_lrpi else params.positive_outcome for x in X]))
 
 ##
 ###
@@ -95,8 +96,9 @@ def experiment_main():
 	print ('---------------------')
 
 	#Setup SHAP
-	background_distribution = shap.kmeans(xtrain,1)
-	adv_shap = Adversarial_Kernel_SHAP_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, n_samples=params.samples, feature_names=features)
+	background_distribution = KMeans(n_clusters=10,random_state=0).fit(xtrain).cluster_centers_
+	adv_shap = Adversarial_Kernel_SHAP_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, 
+			feature_names=features, background_distribution=background_distribution, rf_estimators=100, n_samples=5e4)
 	adv_kerenel_explainer = shap.KernelExplainer(adv_shap.predict, background_distribution,)
 	explanations = adv_kerenel_explainer.shap_values(xtest)
 
