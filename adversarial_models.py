@@ -58,6 +58,7 @@ class Adversarial_Model(object):
 		# allow thresholding for finetuned control over psi_display and f_obscure
 		pred_probs = self.perturbation_identifier.predict_proba(X)
 		perturbation_preds = (pred_probs[:,1] >= threshold)
+
 		sol = np.where(np.array([perturbation_preds == 1,perturbation_preds==1]).transpose(), predictions_to_obscure, predictions_to_explain_by)
 
 		return sol
@@ -171,7 +172,6 @@ class Adversarial_Lime_Model(Adversarial_Model):
 
 		# generate perturbation detection model as RF
 		xtrain = all_x[:,self.numerical_cols]
-
 		xtrain, xtest, ytrain, ytest = train_test_split(xtrain, all_y, test_size=0.2)
 
 		if estimator is not None:

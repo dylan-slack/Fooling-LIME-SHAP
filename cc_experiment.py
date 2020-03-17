@@ -78,7 +78,7 @@ def experiment_main():
 	* This may take some time given that we iterate through every point in the test set
 	* We print out the rate at which features occur in the top three features
 	"""
-
+	
 	xtrain,xtest,ytrain,ytest = train_test_split(X,y,test_size=0.1)
 	ss = StandardScaler().fit(xtrain)
 	xtrain = ss.transform(xtrain)
@@ -90,8 +90,8 @@ def experiment_main():
 	print ('---------------------')
 
 	# Train the adversarial model for LIME with f and psi 
-	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=1)
-	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False)
+	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two')], feature_names=features, perturbation_multiplier=30)
+	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two')])
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):
@@ -103,8 +103,8 @@ def experiment_main():
 	print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
 
 	# Repeat the same thing for two features
-	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi_two()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=1)
-	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False)
+	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi_two()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=30, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two')])
+	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two')])
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):

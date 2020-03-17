@@ -9,7 +9,6 @@ The experiment MAIN for COMPAS.
  * "Nothing shown" refers to SHAP yielding only 0 shapley values 
 """
 import warnings
-warnings.filterwarnings('ignore') 
 
 from adversarial_models import * 
 from utils import *
@@ -43,6 +42,7 @@ unrelated_indcs1 = features.index('unrelated_column_two')
 
 X = X.values
 
+print (features)
 ###
 ## The models f and psi for COMPAS.  We discriminate based on race for f and concider two RANDOMLY DRAWN features to display in psi
 #
@@ -90,12 +90,12 @@ def experiment_main():
 
 	print ('---------------------')
 	print ("Beginning LIME COMPAS Experiments....")
-	print ("(These take some time to run because we have to generate explanations for every point in the test set) ")
+	print ("(These take some time to run because we have to generate explanations for every point in the test set) ") # 'two_year_recid','c_charge_degree'
 	print ('---------------------')
 
 	# Train the adversarial model for LIME with f and psi 
-	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=1)
-	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False)
+	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two'), features.index('c_charge_degree_F'), features.index('c_charge_degree_M'), features.index('two_year_recid'), features.index('race'), features.index("sex_Male"), features.index("sex_Female")], feature_names=features, perturbation_multiplier=30)
+	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, sample_around_instance=True, feature_names=adv_lime.get_column_names(), categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two'),features.index('c_charge_degree_F'), features.index('c_charge_degree_M'), features.index('two_year_recid'), features.index('race'), features.index("sex_Male"), features.index("sex_Female")], discretize_continuous=False)
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):
@@ -107,8 +107,8 @@ def experiment_main():
 	print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
 
 	# Repeat the same thing for two features
-	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi_two()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=1)
-	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False)
+	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi_two()).train(xtrain, ytrain, categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two'),features.index('c_charge_degree_F'), features.index('c_charge_degree_M'), features.index('two_year_recid'), features.index('race'), features.index("sex_Male"), features.index("sex_Female")], feature_names=features, perturbation_multiplier=30)
+	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), categorical_features=[features.index('unrelated_column_one'),features.index('unrelated_column_two'),features.index('c_charge_degree_F'), features.index('c_charge_degree_M'), features.index('two_year_recid'), features.index('race'), features.index("sex_Male"), features.index("sex_Female")], discretize_continuous=False)
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):

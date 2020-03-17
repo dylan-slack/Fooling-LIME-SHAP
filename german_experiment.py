@@ -40,6 +40,10 @@ xtest = ss.transform(xtest)
 
 mean_lrpi = np.mean(xtrain[:,loan_rate_indc])
 
+
+categorical = ['Gender', 'ForeignWorker', 'Single', 'HasTelephone','CheckingAccountBalance_geq_0','CheckingAccountBalance_geq_200','SavingsAccountBalance_geq_100','SavingsAccountBalance_geq_500','MissedPayments','NoCurrentLoan','CriticalAccountOrLoansElsewhere','OtherLoansAtBank','OtherLoansAtStore','HasCoapplicant','HasGuarantor','OwnsHouse','RentsHouse','Unemployed','YearsAtCurrentJob_lt_1','YearsAtCurrentJob_geq_4','JobClassIsSkilled']
+categorical = [features.index(c) for c in categorical]
+
 ###
 ## The models f and psi for GERMAN.  We discriminate based on gender for f and consider loan rate % income for explanation
 #
@@ -78,8 +82,8 @@ def experiment_main():
 	print ('---------------------')
 
 	# Train the adversarial model for LIME with f and psi 
-	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=1)
-	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False)
+	adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=30, categorical_features=categorical)
+	adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, feature_names=adv_lime.get_column_names(), discretize_continuous=False, categorical_features=categorical)
                                                
 	explanations = []
 	for i in range(xtest.shape[0]):
