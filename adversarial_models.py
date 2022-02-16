@@ -12,7 +12,7 @@ from copy import deepcopy
 import shap
 
 class Adversarial_Model(object):
-	"""	A scikit-learn style adversarial explainer base class for adversarial models.  This accetps 
+	"""	A scikit-learn style adversarial explainer base class for adversarial models.  This accepts 
 	a scikit learn style function f_obscure that serves as the _true classification rule_ for in distribution
 	data.  Also, it accepts, psi_display: the classification rule you wish to display by explainers (e.g. LIME/SHAP).
 	Ideally, f_obscure will classify individual instances but psi_display will be shown by the explainer.
